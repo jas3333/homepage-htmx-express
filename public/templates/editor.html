@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <link href="css/style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="root" id="root"></div>
+        <div class="flex-col">
+            <div class="editor-container">
+                <div class="actions">
+                    <button hx-trigger="click" hx-post="/editor/save" hx-include="#text-data">Save</button>
+                </div>
+                <div
+                    class="editor"
+                    id="editor"
+                    hx-get="/editor/getArticles"
+                    hx-target="#select-article"
+                    hx-trigger="load"
+                >
+                    <form id="articles">
+                        <div class="select-article" id="select-article"></div>
+                    </form>
+                    <form id="text-data">
+                        <select name="category">
+                            <option value="linux">Linux</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="programming">Programming</option>
+                        </select>
+                        <input type="text" name="title" class="input" placeholder="Title" />
+                        <textarea
+                            rows="3"
+                            cols="100"
+                            name="summary"
+                            class="text-editor"
+                            placeholder="Article description"
+                        ></textarea>
+                        <textarea
+                            rows="48"
+                            cols="100"
+                            class="text-editor"
+                            hx-trigger="keyup changed delay:5ms"
+                            hx-post="/editor/preview"
+                            name="content"
+                            hx-target="#preview"
+                            id="editor"
+                            placeholder="Content"
+                        ></textarea>
+                    </form>
+                </div>
+
+                <div class="editor-preview" id="preview"></div>
+            </div>
+        </div>
+        <script src="../js/menu.js"></script>
+    </body>
+</html>
