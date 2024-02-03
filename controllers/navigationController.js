@@ -22,7 +22,7 @@ const getArticles = async (req, res) => {
         content.push(`
             <div class="article">
                 <h3>
-                    <a href="articles/${articles[i].slug}">${articles[i].title}</a>
+                    <a href=${articles[i].slug} hx-get="/articles/${articles[i].slug}" hx-target="#content" hx-push-url="true" >${articles[i].title}</a>
                 </h3>
                 <p>
                     ${articles[i].summary}
