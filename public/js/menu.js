@@ -33,6 +33,7 @@ const menuItems = [
     { title: 'Projects', href: '#' },
     { title: 'Live Wallpaper', href: '#' },
     { title: 'Editor', href: '/editor' },
+    { title: 'Login', href: '/login' },
 ];
 
 const createAnchor = (item) => {

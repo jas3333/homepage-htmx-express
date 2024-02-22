@@ -1,17 +1,34 @@
 import Article from './../models/article.js';
 import { marked } from 'marked';
 import path from 'path';
+import jwt from 'jsonwebtoken';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const home = async (req, res) => {
+    console.log(req.body.headers);
     const indexPath = path.join(__dirname, '../public/index.html');
     res.sendFile(indexPath);
 };
 
 const editor = async (req, res) => {
-    const editorPath = path.join(__dirname, '../public/templates/editor.html');
-    res.sendFile(editorPath);
+    const token = req.query.token;
+
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            if (decoded.user === 'a') {
+                const editorPath = path.join(__dirname, '../public/templates/editor.html');
+                res.status(200).sendFile(editorPath);
+            }
+        } catch (error) {
+            console.log(error);
+            res.redirect('/login');
+        }
+    } else {
+        console.log('NO');
+        res.redirect('/login');
+    }
 };
 
 const getArticles = async (req, res) => {
@@ -35,6 +52,11 @@ const getArticles = async (req, res) => {
 };
 
 const getArticleCategory = async (req, res) => {
+    console.log(req.params.name);
+    if (req.params.name !== 'linux' && req.params.name !== 'gaming' && req.params.name !== 'programming') {
+        res.status(404);
+    }
+
     const articles = await Article.find({ category: req.params.name });
     const isHxRquest = req.headers['hx-request'] === 'true';
     let content = [];
@@ -73,7 +95,7 @@ const getArticleCategory = async (req, res) => {
                     <script src="../js/menu.js"></script>
                 </body>
             </html>
-            `);
+        `);
     }
 };
 
@@ -111,4 +133,9 @@ const getArticle = async (req, res) => {
     }
 };
 
-export { home, editor, getArticles, getArticle, getArticleCategory };
+const login = async (req, res) => {
+    const loginPath = path.join(__dirname, '../public/templates/login.html');
+    res.sendFile(loginPath);
+};
+
+export { home, editor, getArticles, getArticle, getArticleCategory, login };

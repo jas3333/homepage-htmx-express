@@ -8,6 +8,11 @@
         <link href="css/style.css" rel="stylesheet" />
     </head>
     <body>
+        <script>
+            const url = new URL(window.location.href);
+            url.searchParams.delete('token');
+            window.history.replaceState({}, document.title, url);
+        </script>
         <div class="root" id="root"></div>
         <div class="flex-col">
             <div class="editor-container">

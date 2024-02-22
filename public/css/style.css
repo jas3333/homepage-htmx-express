@@ -97,6 +97,38 @@ code {
     box-shadow: 5px 5px 10px 0px black;
 }
 
+/* Login */
+.login-box {
+    margin: 300px auto;
+    display: flex;
+    border: solid 1px #919ca5;
+    border-radius: 10px;
+    padding: 20px;
+}
+.login {
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    border: none;
+    outline: none;
+}
+
+.login-button {
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
+    background: #20262b;
+    border-radius: 5px;
+    border: 1px solid #919ca5;
+    color: #919ca5;
+    transition: ease all 0.5s;
+}
+.login-button:hover {
+    background: #919ca5;
+    color: #20262b;
+}
+
 /* Menu */
 .menu {
     display: flex;
